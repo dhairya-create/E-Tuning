@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}Sell Page{% endblock title %}
+{% block content %}
+        <!-- Bottom Bar Start -->
+        <div class="bottom-bar">
+           
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="static/img/logo4.png" alt="Logo"> 
+                              
+                            </a>
+                        </div>
+        </div>
+        <div class="login">              
+        <div class="col-lg-6 mx-auto">
+                <div class="container-fluid">
+                    <div class="register-form">
+                        <form method="post" action="/sellpage" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% if error %}
+                            <div class="alert alert-danger" role="alert">
+                                {{error}}
+                            </div>
+                            {% endif %}
+                        <h2 class="text-center">SELL PRODUCT</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" required class="form-control" name="fname" placeholder="First Name" value="{{values.fname}}"/>
+                                </div>
+                                <div class="col-md-6">
+                                   
+                                    <input type="text" required class="form-control" name="lname" placeholder="Last Name" value="{{values.lname}}"/>
+                                </div>
+                            
+                            <br>
+                            <div class="col-md-6">
+                                    
+                                    <input type="text" required class="form-control" name="email" placeholder="email" value="{{values.email}}" />
+                            </div>
+                            <div class="col-md-6">
+                                    
+                                    <input type="text" required class="form-control" name="phone" placeholder="phone" value="{{values.phone}}" />
+                            </div>
+                                
+                            <div class="col-lg-6 form-group">
+                                <input type="text" class="form-control" required name="product_name" placeholder="Instrument Name" value="{{values.name}}" />
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <input type="text" class="form-control" required name="type" placeholder="Instrument Type" value="{{values.category}}" />
+                            </div>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="5" required name="add" placeholder="Address">{{values.add}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="5" required name="des" placeholder="Description of the musical-instrument">{{values.des}}</textarea>
+                            </div>
+                            <div class="row">
+                            <div class="col-md-6">            
+                                <input type="number" min="1000" value="{{values.price}}" required max="5000" class="form-control" name="price" placeholder="Price" />
+                            </div>
+                                
+                            <div class="col-md-6 form-group">
+                                <label>Upload Image</label>
+                                <input class="form-control" type="file" required name="image" placeholder="Please Upload Image">
+                            </div>
+                            </div>
+                            <button class="btn" type="submit">Put for sale!</button>
+                        </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+{% endblock content %}

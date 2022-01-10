@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{%block title%} Contact Us {% endblock %}
+{%block content %}
+
+        <!-- Bottom Bar Start -->
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="static/img/logo4.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Bar End -->
+        
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">Home</a></li>
+                    <li class="breadcrumb-item active">Contact</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        
+        <!-- Contact Start -->
+        <div class="contact">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="contact-info">
+                            <h2>Contact Us</h2>
+                            <h3><i class="fa fa-map-marker"></i>304 Aarohi Complex, Navrangpura, Ahmedabad</h3>
+                            <h3><i class="fa fa-envelope"></i>ankur@infotrex.com</h3>
+                            <h3><i class="fa fa-phone"></i>9376133927</h3>
+                        </div>
+                    </div>
+                        <div class="contact-form">
+                            <form method="post" action="/contact">
+                            {% csrf_token %}
+                                {% if error %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{error}}
+                                    </div>
+                                {% endif %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input required type="text" class="form-control" name="name" value="{{value.name}}" placeholder="Your Name" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input required  type="email" class="form-control" name="email" value="{{value.email}}" placeholder="Your Email" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input  required type="text" class="form-control" name="subject" value="{{value.subject}}" placeholder="Subject" />
+                                </div>
+                                <div class="form-group">
+                                    <textarea  required class="form-control" rows="5" name="des" value="{{value.des}}" placeholder="Message"></textarea>
+                                </div>
+                                <div><button class="btn" type="submit">Send Message</button></div>
+                            </form>
+                        </div>
+                    </div>
+					 <div class="col-lg-12">
+                        <div class="contact-map">
+								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.526896055398!2d72.54625351403038!3d23.04113698494371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e8524ca2fb465%3A0x4b19ac11f1a1d20e!2sAarohi%20Complex!5e0!3m2!1sen!2sin!4v1612292814683!5m2!1sen!2sin" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Contact End -->
+{% endblock content %}

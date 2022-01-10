@@ -1,0 +1,75 @@
+<html>
+<head>
+    <link href="static/css/CSS2.css" rel="stylesheet">
+</head>
+<body>        
+
+
+<div class="main-content">
+    <div class="container mt-7">
+    <!-- Table -->
+     
+    <div class="row">
+        <div class="col-xl-8 m-auto order-xl-1">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0"> Reset Password</h3>
+                </div>
+                
+              </div>
+            </div>
+            <div class="card-body">
+            <form action="/resetpassword" method="POST">
+                {% csrf_token %}
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+                {% endif %}
+                <div class="pl-lg-4"> 
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <br>
+                        <label class="form-control-label" for="input-first-name" required>New Password</label>
+                        <input type="password" id="input-first-name" name="new" class="form-control form-control-alternative" placeholder="New password">
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <br>
+                        <label class="form-control-label" for="input-last-name" required>Confirm Password</label>
+                        <input type="password" id="input-last-name" name="retype"class="form-control form-control-alternative" placeholder="Retype Password" >
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+                <hr class="my-4">
+			    <div class="mx-auto">
+				    <button type="submit" class="btn btn-sm btn-primary">Change Password</button>
+		        </div>  
+                  
+                </div> 
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+<!-- Back to Top -->
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="static/lib/easing/easing.min.js"></script>
+<script src="static/lib/slick/slick.min.js"></script>
+<!-- Template Javascript -->
+<script src="static/js/main.js"></script>
+  
+  
+  
+

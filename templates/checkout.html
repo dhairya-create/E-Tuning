@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{%block title%} Checkout {% endblock %}
+{%block content %}
+{% load cart %}
+{% load custom_filter %}
+        <!-- Bottom Bar Start -->
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="static/img/logo4.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Bar End --> 
+        
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">Home</a></li>
+                    <li class="breadcrumb-item active">Checkout</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        
+        <!-- Checkout Start -->
+        <div class="checkout">
+            <div class="container-fluid"> 
+                <div class="row">
+                
+                    <div class="col-lg-4">
+                        <div class="checkout-inner">
+                            <div class="checkout-summary">
+                                <h1>Cart Total</h1>
+                                <h2>Grand Total : {{products|total_cart_price:request.session.cart|currency}}</h2>
+                            </div>
+                        
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="checkout-inner">
+                        <form method="POST" action="/checkout">
+                        {% csrf_token %}
+                            <div class="billing-address" id="bill" style="display:block">
+                                <h2>Billing Address</h2>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Mobile No</label>
+                                        <input class="form-control" type="text" value="{{customer.phone}}" placeholder="Mobile No">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Address</label>
+                                        <textarea class="form-control" placeholder="Address"> {{customer.add}}</textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Pincode</label>
+                                        <input class="form-control" type="text" value={{customer.pin}} placeholder="ZIP Code">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="shipping-address" id="ship" style="display:none">
+                                <h2>Shipping Address</h2>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Mobile No</label>
+                                        <input class="form-control" type="text" name="phone" placeholder="Mobile No">
+                                    </div>    
+                                    <div class="col-md-12">
+                                        <label>Address</label>
+                                        <input class="form-control" type="text" name="address" placeholder="Address">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>City</label>
+                                        <input class="form-control" type="text" name="city" placeholder="City">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>State</label>
+                                        <input class="form-control" type="text" name="state" placeholder="State">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>pincode</label>
+                                        <input class="form-control" type="text" name="pin" placeholder="ZIP Code">
+                                    </div>
+                                </div>
+                            </div>
+                      
+
+                            <div class="col-md-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input"id="check" name="check" onclick="HideShow()"><b>Ship to Different Address
+                                </div>
+                            </div>
+                            <div class="checkout-payment col-lg-6">
+                                <div class="checkout-btn">
+                                    <button onclick="change()" style="display:block" id="place">Place Order</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="checkout-payment col-lg-6">
+                            <div class="checkout-btn">
+                                <button id="view" style="display:none"><a href="/orders">View Order</a></button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+        <!-- Checkout End -->
+    <script>
+        function HideShow(){
+            var checkbox = document.getElementById("check")
+            var shipping = document.getElementById("ship")
+            var billing = document.getElementById("bill")
+
+            if(checkbox.checked == true){
+                shipping.style.display = "block";
+                billing.style.display = "none";
+            }
+            else{
+                shipping.style.display = "none";
+                billing.style.display = "block";
+            }
+        }
+        function change(){
+            var placeorder = document.getElementById("place")
+            var vieworder = document.getElementById("view")
+
+            placeorder.style.display = "none"
+            vieworder.style.display = "block"
+        }
+    </script>
+{% endblock %}

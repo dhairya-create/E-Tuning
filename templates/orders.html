@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{%block title%}Orders {% endblock %}
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+<!-- Bottom Bar Start -->
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="static/img/logo4.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Bar End -->
+        
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">Home</a></li>
+                    <li class="breadcrumb-item active">Orders</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        
+        <div class="cart-page">
+            <div class="container-fluid">
+               <div class="cart-page-inner">
+                    <div class="table-responsive">
+                        {% if error %}
+                        <div class="container-fluid">
+                            <h3 class="text-center pt-5 pb-5">NO ORDERS PLACED YET</h3>
+                        </div>
+                        {% else %}
+                        <p class="display-4 text-center">Your Orders</p>
+        
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Sno.</th>
+                                                <th>Image</th>
+                                                <th>Product</th>
+                                                <th>Date</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                                <th>Status</th>
+                                            </tr>                            
+                                        </thead>
+                                        <tbody>
+                                            {% for order in orders %}
+                                                <tr>
+                                                    <td>{{forloop.counter}}</td>
+                                                    <td><img style="height: 80px;" class="rounded-circle" src="{{order.product.product_image.url}}" alt=""></td>
+                                                    <td>{{order.product.product_name}}</td>
+                                                    <td>{{order.date}}</td>
+                                                    <td>{{order.price|currency}}</td>
+                                                    <td>{{order.quantity}}</td>
+                                                    <td>{{order.quantity|multiply:order.price|currency}}</td>
+                                                    {% if order.status %}
+                                                        <td><small class="badge badge-success">Completed</small></td>
+                                                    {%else%}
+                                                        <td><small class="badge badge-warning">Pending</small></td>
+                                                    {% endif %}
+                                                </tr>
+
+                                            {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div> 
+                    <div>             
+
+  
+{% endblock content%}

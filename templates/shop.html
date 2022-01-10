@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Shop {% endblock %}
+{% block content %}        
+        <!-- Bottom Bar Start -->
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="static/img/logo4.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="search">
+                                <form action="/search" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" placeholder="Search" name="search_item">
+                                    <button><i class="fa fa-search"></i></button>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Bar End -->  
+        
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">Home</a></li>
+                    <li class="breadcrumb-item active">Shop</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        {% load cart %}
+        {% load custom_filter %}
+
+                            <!--adding Manually products from table-->
+                    <div class="container-fluid mt-3">
+                        <div class="row">
+                            <!--filters-->
+                            <div class="col-lg-3 mx-auto">
+                                <div class="list-group">
+                                    <a href="/shop" class="list-group-item list-group-item-action">All Products</a>
+                                    {% for category in categories %}
+                                    <a href="/shop?category={{category.id}}"
+                                        class="list-group-item list-group-item-action">  {{category.name}} </a>
+                                    {% endfor %}
+                                </div>
+                            </div> 
+                            <!--all products-->
+                            <div id='products' class="col-lg-9 mx-auto">
+                                <div class="row mx-auto">
+                                    {% for product in product %}
+                                    <div class="card mx-auto mb-3 col-lg-4" id="{{product.id}}" style="width: 18rem;">
+                                        <img class="card-img-top" src="{{product.product_image.url}}" alt="Card image cap">
+                                        <div class="card-body">
+                                            <b><p class="card-title">{{product.product_name}}</p></b>
+                                            <p class="card-text">{{product.product_price|currency}}</b></p>
+                                        </div>
+
+                                        <div class="card-footer p-0 no-gutters">
+
+                                            {% if product|is_in_cart:request.session.cart %}
+                                            <div class="row no-gutters">
+                                                <form action="/shop#{{product.id}}" class="col-2 " method="post">
+                                                    {% csrf_token %}
+                                                    <input hidden type="text" name='product' value="{{product.id}}">
+                                                    <input hidden type="text" name='remove' value='True'>
+                                                    <input type="submit" value=" - " class="btn btn-block btn-light border-right">
+                                                </form>
+                                                {% if product|stock_quantity:request.session.message %}
+                                                    <div class="text-center col">Out of Stock</div>
+                                                {% else %}
+                                                    <div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart</div>
+                                                {% endif %}
+                                                    <form action="/shop#{{product.id}}" class="col-2 " method="post">
+                                                        {% csrf_token %}
+                                                        <input hidden type="text" name='product' value="{{product.id}}">
+                                                        <input type="submit" value=" + " class="btn btn-block btn-light border-left">
+                                                    </form>
+                                                </div>
+                                            {% else %}
+                                                {% if product|stock_quantity:request.session.message %}
+                                                    <div class="text-center col">Out of Stock</div>
+                                                {% else %}
+                                                    <form action="/shop#{{product.id}}" method="POST" class="btn-block">
+                                                        {% csrf_token %}
+                                                        <input hidden type="text" name='product' value="{{product.id}}">
+                                                        <input type="submit" class="float-right btn btn-light  form-control"
+                                                            value="Add To Cart">
+                                                    </form>
+                                                {% endif %}
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+{% endblock content %}

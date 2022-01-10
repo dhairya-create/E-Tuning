@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title%} Login {% endblock %}
+{% block content%}        
+        <!-- Bottom Bar Start -->
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="#">
+                                <img src="static/img/logo4.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+           </div>
+        </div>
+        <!-- Bottom Bar End --> 
+        
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item active">Login</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+		<div class="login">
+            <div class="container-fluid">
+                <div class="row mx-auto">
+					<div class="col-lg-4 mx-auto">
+                        <div class="login-form">
+                        <form method="post" action="/login">
+                        {% csrf_token %}
+                            {% if error %}
+                            <div class="alert alert-danger" role="alert">
+                                {{error}}
+                            </div>
+                            {% endif %}
+                            <div class="row ">
+                            <h3 class="mx-auto alert m alert-light border rounded">LOGIN </h3>
+                                <div class="col-md-12 mx-auto">
+                                    <label>Username</label>
+                                    <input class="form-control" type="text" name="username" placeholder="Username" required>
+                                    <label>Password</label>
+                                    <input class="form-control" type="password" name="password" placeholder="Password">
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <br><button class="btn" type="submit" value="login">Submit</button> 
+								</div>
+                            </div>
+                        </form>
+                        <br><span class="psw"><a href="/username">Forgot Password?</a></span>
+                            <br><span class="psw"><a href="/register">Create a new account.</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock content %}

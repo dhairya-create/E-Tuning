@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Register | E - Tunning</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
+
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="static/lib/slick/slick.css" rel="stylesheet">
+        <link href="static/lib/slick/slick-theme.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="static/css/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        
+        <!-- Nav Bar Start -->
+        <div class="nav">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                    <a href="#" class="navbar-brand">MENU</a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+						<div class="navbar-nav mr-auto">
+                            <a href="/index" class="nav-item nav-link">Home</a>
+                            <a href="/shop" class="nav-item nav-link">Shop</a>
+							<a href="/artist" class="nav-item nav-link">Artist</a>
+                            <a href="/cart" class="nav-item nav-link">Cart</a>
+                            <a href="/checkout" class="nav-item nav-link">Checkout</a>
+                            <!--<a href="#" class="nav-item nav-link">My Account</a>-->
+							<a href="/about" class="nav-item nav-link">About Us</a>
+							<a href="/contact" class="nav-item nav-link">Contact Us</a>
+                        </div>
+                        <div class="navbar-nav ml-auto">
+                            <ul class=" navbar-nav my-2 my-lg-0">
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="/cart">Cart
+                                        <span class="badge badge-info">{{request.session.cart.keys|length}}</span>
+                                        <span class="sr-only">(current)</span></a>
+                                </li>
+                            {% if request.session.customer %}
+
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="/orders">Orders<span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+                                </li>
+                            {% else %}
+
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="/register">Signup<span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="/login">Login<span class="sr-only">(current)</span></a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+        <!-- Nav Bar End -->      
+        
+        <!-- Bottom Bar Start -->
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="static/img/logo4.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Bar End --> 
+        
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">Home</a></li>
+                    <li class="breadcrumb-item active">Register</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        
+        <!-- Login Start -->
+        <div class="login">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6 mx-auto">    
+                        <div class="register-form">
+                        <form method="post" action="/register" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            {% if error %}
+                            <div class="alert alert-danger" role="alert">
+                                {{error}}
+                            </div>
+                            {% endif %}
+                            <div class="row mx-auto">
+                            <h3 class="mx-auto alert alert-light border rounded">CREATE AN ACCOUNT</h3>
+                                <div class="col-md-6">
+                                    
+                                    <label>First Name</label>
+                                    <input required value="{{value.fname}}" class="form-control" type="text" name="fname" placeholder="First Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Last Name</label>
+                                    <input required value="{{value.lname}}" class="form-control" type="text" name="lname" placeholder="Last Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>E-mail</label>
+                                    <input required value="{{value.email}}" class="form-control" type="text" name="email" placeholder="E-mail">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Mobile No</label>
+                                    <input required value="{{value.phone}}" class="form-control" type="text" name="phone" placeholder="Mobile No">
+                                </div>
+                               <div class="col-md-6">
+                                    <label>User Name</label>
+                                    <input required value="{{value.username}}" class="form-control" type="text" name="username" placeholder="username">
+                                </div>
+                                
+                                 
+                                <div class="col-md-6">   
+                                    <div class="dropdown">    
+                                        <select name="tab" id="customer">
+                                        <option value=" " disabled="disabled" selected="selected">Select User</option>
+                                        <option id="option1" value="customer">Customer</option>
+                                        <option id="option2" value="artist">Artist</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div id="div1" class="hide" style="display:none">
+                                        <label>Description</label>
+                                        <textarea value="{{value.des}}" class="form-control" type="text" name="des" placeholder="Description"></textarea>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Upload Image</label>
+                                            <input value="{{value.image}}" class="form-control" type="file" name="image" placeholder="Please Upload Image">
+                                        </div>
+                                         <div class="col-md-6">
+                                            <label>Category </label>
+                                            <input value="" class="form-control" type="text" name="category" placeholder="e.g Vocalist">
+                                         </div>
+                                    </div>
+                                </div>
+								<div class="col-md-6">
+                                    <label>Address</label>
+                                    <textarea required value="{{value.add}}" class="form-control" type="text" name="add" placeholder="Address"></textarea>
+                                </div>
+								
+								<div class="col-md-6">
+                                    <label>Pincode</label>
+                                    <input value="{{value.pin}}" class="form-control" type="text" name="pin" placeholder="Pincode">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Password</label>
+                                    <input required class="form-control" type="password" name="password" placeholder="Password">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Retype Password</label>
+                                    <input required class="form-control" type="password" name="retypepass" placeholder="Password">
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+
+        <!-- Login End -->
+        
+        <!-- Footer Start -->
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Get in Touch</h2>
+                            <div class="contact-info">
+                                <p><i class="fa fa-map-marker"></i>304, Aarohi complex, near vijay cross roads, Navrangpura, Ahmedabad - 380009</p>
+                                <p><i class="fa fa-envelope"></i>ankur@infotrex.com</p>
+                                <p><i class="fa fa-phone"></i>9376133927</p>
+                            </div>
+                        </div>
+                    </div>
+             
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Inportant Links</h2>
+                            <ul>
+								<li><a href="/index">Home</a></li>
+								<li><a href="/shop">Shop</a></li>
+								<li><a href="/artist">Artist</a></li>
+                                <li><a href="/about">About Us</a></li>
+								<li><a href="/contact">Contact Us</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Terms & Condition</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+        
+        <!-- Footer Bottom Start -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 copyright">
+                        <p>Copyright &copy; All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Bottom End -->       
+        
+         
+        <a href="#" class="back-to-top">   <i class="fa fa-chevron-up"></i></a>
+
+        
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="static/lib/easing/easing.min.js"></script>
+        <script src="static/lib/slick/slick.min.js"></script>
+        
+        <!-- Template Javascript -->
+        <script src="static/js/main.js"></script>
+        <script>
+            
+             $('#customer').on('change', function() {
+                if ( this.value == 'artist')
+                    $("#div1").show();     
+                else
+                    $("#div1").hide();
+                }).trigger("change");
+        </script>
+    </body>
+</html>

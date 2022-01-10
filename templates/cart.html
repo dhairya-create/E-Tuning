@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{%block title%} Cart {% endblock %}
+{%block content %}
+{% load cart %}
+{% load custom_filter %}
+        <!-- Bottom Bar Start -->
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="static/img/logo4.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Bar End -->
+        
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">Home</a></li>
+                    <li class="breadcrumb-item active">Cart</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        
+        <!-- Cart Start -->
+        {% if request.session.cart %}
+        <div class="cart-page">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="cart-page-inner">
+                            <div class="table-responsive">
+                                <p class="display-4 text-center">Your Cart</p>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sno.</th>
+                                            <th>Image</th>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th>Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for product in products %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td><img style="height: 80px;" class="rounded-circle" src="{{product.product_image.url}}" alt=""></td>
+                                            <td>{{product.product_name}}</td>
+                                            <td>{{product.product_price|currency}}</td>
+                                            <td>{{product|cart_quantity:request.session.cart}}</td>
+                                            <td>{{product|price_total:request.session.cart|currency}}</td>
+                                            <td>
+                                                <form action="/cart#{{product.id}}" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="text" hidden name="remove" value="{{product.id}}">
+                                                    <button> <i class="fa fa-trash"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cart-page-inner">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="cart-summary">
+                                        <div class="cart-content">
+                                            <h1>Cart Summary</h1>
+                                            <h2>Grand Total : {{products|total_cart_price:request.session.cart|currency}}</h2>
+                                        </div>
+                                        <div class="row">
+                                        <div class="cart-btn">
+                                            <button><a href="/checkout">Checkout</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="container-fluid">
+            <h3 class="text-center pt-5 pb-5">YOUR CART IS EMPTY</h3>
+            </div>
+        {% endif %}
+        <!-- Cart End -->
+
+<!--Modal starts here-->
+
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Check Out Form
+                </h5>
+                <hr>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-2 p-2">
+                    <form action="/checkout" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="">Address</label>
+                            <input type="text" name="address" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Phone</label>
+                            <input type="text" name="phone" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                        </div>
+
+                        <input type="submit" class="btn float-right btn-outline-info col-lg-6" value="Check out">
+                    </form>
+                </div>
+            </div>-->
+
+        </div>
+    </div>
+  </div>
+{% endblock content %}
